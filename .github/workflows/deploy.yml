@@ -1,0 +1,38 @@
+name: Deploy Weather Dashboard
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      # Set up Node.js (for React or other JS-based apps)
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Inject the API Key at build time
+      - name: Build the app
+        run: npm run build
+        env:
+          REACT_APP_WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }}
+
+      # Deploy to GitHub Pages (use github-pages-deploy-action)
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: build
