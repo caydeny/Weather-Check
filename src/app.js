@@ -95,19 +95,6 @@ function hideLoading() {
     document.querySelector(".app-grid").style.display = "grid";
 }
 
-function setupErrorHandling() {
-    // Add retry button to error element if it doesn't exist
-    if (!errorEl.querySelector('button')) {
-        const retryButton = document.createElement('button');
-        retryButton.textContent = 'Try Again';
-        retryButton.addEventListener('click', () => {
-            errorEl.style.display = 'none';
-            document.querySelector(".app-grid").style.display = 'grid';
-            document.querySelector(".weather__searchform").focus();
-        });
-        errorEl.appendChild(retryButton);
-    }
-}
 
 function showError(message) {
     errorEl.querySelector("p").textContent = message;
